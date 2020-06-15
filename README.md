@@ -1,5 +1,5 @@
-## Axway API Manager CLI?
-apimctl is a command line (CLI) utility which allows you to manage Axway's API Manager resources. This utility also allows you to automate the deployment of API Manager resources. It also allows you to view and edit the existing resources. This CLI is develop using cobra and viper (golang packages).
+## Axway API Manager CLI
+apimctl is a command line (CLI) utility which allows you to manage Axway's API Manager resources. This utility also allows you to automate the deployment of API Manager resources. It also allows you to view and edit the existing resources. This CLI is develop using [cobra](https://github.com/spf13/cobra) and [viper](https://github.com/spf13/viper) (golang packages).
 
 # Installation
 
