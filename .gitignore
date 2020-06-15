@@ -1,3 +1,4 @@
 apimgr/
 .vscode/launch.json
 apimctl*
+.DS_Store
