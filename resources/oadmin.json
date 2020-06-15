@@ -1,0 +1,10 @@
+{
+	"name": "Thor Odinson",
+	"description": "Thor Odinson is Organization Administrator",
+	"email": "thor@apimanager.com",
+	"phone": "1800 4455 6677",
+	"loginName":"thor",
+	"role": "oadmin",
+	"enabled": true,
+	"image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEWvqiFt32O6AAAADElEQVQImWNgIA0AAAAwAAFDlLdnAAAAAElFTkSuQmCC" 
+	}

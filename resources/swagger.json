@@ -1,0 +1,222 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Provides methods for retrieving a list of ATMs and a single ATM. An ATM is an electronic device that enables the bank customer to perform financial transactions without the need for a human cashier. The customer can access his bank deposit to make a variety of actions such as cash withdrawal, paying utilities, credit mobile phones etc.",
+    "version" : "1.0",
+    "title" : "Benchmark API ATM"
+  },
+  "host" : "fphx429.flex.lab.phx.axway.int:8443",
+  "basePath" : "/backend_dir",
+  "schemes" : [ "https" ],
+  "produces" : [ "application/json" ],
+  "security" : [ {
+    "API Key" : [ ]
+  } ],
+  "paths" : {
+    "/atms/{id}" : {
+      "post" : {
+        "summary" : "blah",
+        "description" : "blah",
+        "operationId" : "PostATM",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id for atm",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "get" : {
+        "summary" : "blah",
+        "description" : "blah",
+        "operationId" : "GetATM",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id for atm",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/oauth/{id}" : {
+      "get" : {
+        "summary" : "blah",
+        "description" : "blah",
+        "operationId" : "OAuthGetATM",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id for atm",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/oauth" : {
+      "get" : {
+        "summary" : "blah",
+        "description" : "blah",
+        "operationId" : "OAuthGetATMs",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "distance",
+          "in" : "query",
+          "description" : "distance",
+          "required" : true
+        }, {
+          "name" : "x",
+          "in" : "query",
+          "description" : "longtitude for atm",
+          "required" : true
+        }, {
+          "name" : "y",
+          "in" : "query",
+          "description" : "latitude for atm",
+          "required" : true
+        }, {
+          "name" : "maxResults",
+          "in" : "query",
+          "description" : "max results",
+          "required" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    },
+    "/atms" : {
+      "post" : {
+        "summary" : "blah",
+        "description" : "blah",
+        "operationId" : "PostATMs",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "distance",
+          "in" : "query",
+          "description" : "distance",
+          "required" : true
+        }, {
+          "name" : "x",
+          "in" : "query",
+          "description" : "longtitude for atm",
+          "required" : true
+        }, {
+          "name" : "y",
+          "in" : "query",
+          "description" : "latitude for atm",
+          "required" : true
+        }, {
+          "name" : "maxResults",
+          "in" : "query",
+          "description" : "max results",
+          "required" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      },
+      "get" : {
+        "summary" : "blah",
+        "description" : "blah",
+        "operationId" : "GetATMs",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "distance",
+          "in" : "query",
+          "description" : "distance",
+          "required" : true
+        }, {
+          "name" : "x",
+          "in" : "query",
+          "description" : "longtitude for atm",
+          "required" : true
+        }, {
+          "name" : "y",
+          "in" : "query",
+          "description" : "latitude for atm",
+          "required" : true
+        }, {
+          "name" : "maxResults",
+          "in" : "query",
+          "description" : "max results",
+          "required" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "API Key" : {
+      "description" : "API Key",
+      "type" : "apiKey",
+      "name" : "KeyId",
+      "in" : "header"
+    }
+  }
+}

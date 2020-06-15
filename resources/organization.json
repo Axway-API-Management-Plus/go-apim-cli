@@ -1,0 +1,9 @@
+{ 
+	"description": "Marvel Organization", 
+	"email": "avengers@postpat.com", 
+	"phone": "1800 3332 5542", 
+	"virtualHost": "",
+	"enabled": true, 
+	"development": true, 
+	"image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEWvISG1qCI6AAAADElEQVQImWNgIA0AAAAwAAFDlLdnAAAAAElFTkSuQmCC"
+}

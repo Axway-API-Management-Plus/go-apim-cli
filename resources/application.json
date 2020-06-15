@@ -1,0 +1,9 @@
+{ 
+
+	"description": "FastFood Centers application", 
+	"email": "fastfood@postpat.com", 
+	"phone": "1800 3332 5542", 
+    "enabled": true, 
+    "apis": [],
+	"image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEWvISG1qCI6AAAADElEQVQImWNgIA0AAAAwAAFDlLdnAAAAAElFTkSuQmCC"
+}

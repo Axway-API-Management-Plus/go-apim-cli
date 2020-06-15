@@ -1,0 +1,10 @@
+{ 
+	"name": "Ant Man2", 
+	"description": "Ant Man is an Avenger", 
+	"email": "antman3@apimanager.com", 
+	"phone": "1800 4445 8669", 
+	"role": "user", 
+	"loginName":"antman3",
+	"enabled": true, 
+	"image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEWvqiFt32O6AAAADElEQVQImWNgIA0AAAAwAAFDlLdnAAAAAElFTkSuQmCC" 
+	}

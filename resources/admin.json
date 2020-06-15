@@ -1,0 +1,10 @@
+{
+	"name": "Iron Man",
+	"description": "Iron Man Avengers API administrator",
+	"email": "ironman@apimanager.com",
+	"phone": "1800 4245 8667",
+	"loginName":"ironman",
+	"role": "admin",
+	"enabled": true,
+	"image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEUhNq9RgD4BAAAADElEQVQImWNgIA0AAAAwAAFDlLdnAAAAAElFTkSuQmCC" 
+	}
