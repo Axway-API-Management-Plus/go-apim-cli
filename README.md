@@ -4,9 +4,9 @@ apimctl is a command line (CLI) utility which allows you to manage Axway's API M
 # Installation
 
 ```
-Download the CLI from https://github.com/Axway-API-Management-Plus/go-apim-cli/releases
-chmod +x apimctl_2.0.0_linux_amd64 
-mv apimctl_2.0.0_linux_amd64 /usr/local/bin/apimctl 
+curl -LJO https://github.com/Axway-API-Management-Plus/go-apim-cli/releases/download/2.0.0/apimctl_darwin_amd64
+chmod +x apimctl_darwin_amd64
+mv apimctl_darwin_amd64 /usr/local/bin/apimctl 
 ```
 
 # Supported Command
@@ -39,9 +39,9 @@ Use "apimctl [command] --help" for more information about a command.
  ```
 
 # Examples
-
+```
 apimctl login
-
+```
 ## Create API Manager resources
 
 * apimctl create org -n Marvel -ed 

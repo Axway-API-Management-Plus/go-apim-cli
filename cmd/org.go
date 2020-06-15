@@ -177,10 +177,10 @@ func createOrganization(cmd *cobra.Command, args []string) {
 	}
 	utils.PrettyPrintInfo("Organization %v Created with ID %v", org.Name, org.Id)
 	if org.Enabled == false {
-		fmt.Printf("Organizations is not enabled")
+		fmt.Printf("Organizations is not enabled\n")
 	}
 	if org.Development == false {
-		fmt.Printf("Organizations is not enabled for API Development")
+		fmt.Printf("Organizations is not enabled for API Development\n")
 	}
 	return
 }
