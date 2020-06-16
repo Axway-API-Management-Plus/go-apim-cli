@@ -94,7 +94,11 @@ func init() {
 func createAPIKey(cmd *cobra.Command, args []string) {
 	cfg := getConfig()
 	name = appName
-	appID := getApplicationByName(args)
+	appID, err := getApplicationByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("Application %v not found ", appName)
+		return
+	}
 
 	apikey := apimgr.ApiKey{}
 
@@ -106,7 +110,7 @@ func createAPIKey(cmd *cobra.Command, args []string) {
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)
 
-	apikey, _, err := client.ApplicationsApi.ApplicationsIdApikeysPost(context.Background(), appID, apikeyPost)
+	apikey, _, err = client.ApplicationsApi.ApplicationsIdApikeysPost(context.Background(), appID, apikeyPost)
 	if err != nil {
 		utils.PrettyPrintErr("Error creating apikey: %v ", err)
 		return
@@ -122,7 +126,11 @@ func listAPIKeys(cmd *cobra.Command, args []string) {
 	client = apimgr.NewAPIClient(cfg)
 	stdout := fmtDisplay()
 
-	appID := getApplicationByName(args)
+	appID, err := getApplicationByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("application %v not found ", appName)
+		return
+	}
 
 	keys, _, err := client.ApplicationsApi.ApplicationsIdApikeysGet(context.Background(), appID)
 
@@ -145,12 +153,16 @@ func listAPIKeys(cmd *cobra.Command, args []string) {
 
 func deleteAPIKey(cmd *cobra.Command, args []string) {
 	cfg := getConfig()
-	appID := getApplicationByName(args)
+	appID, err := getApplicationByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("application %v not found ", appName)
+		return
+	}
 
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)
 
-	_, err := client.ApplicationsApi.ApplicationsIdApikeysKeyIdDelete(context.Background(), appID, keyID)
+	_, err = client.ApplicationsApi.ApplicationsIdApikeysKeyIdDelete(context.Background(), appID, keyID)
 	if err != nil {
 		utils.PrettyPrintErr("Unable to delete the apikey: %v", err)
 		return

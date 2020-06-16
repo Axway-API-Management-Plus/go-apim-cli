@@ -16,26 +16,33 @@ import (
 )
 
 var (
-	file         string // blob file location
-	config       string // config file location
-	orgName      string
-	appName      string
-	keyID        string
-	oauthID      string
-	name         string
-	password     string
-	apiName      string
-	userName     string
-	userRole     string
-	loginName    string
+	file   string // blob file location
+	config string // config file location
+
+	orgName   string
+	appName   string
+	apiName   string
+	userName  string
+	loginName string
+
+	keyID   string
+	oauthID string
+
+	name     string
+	password string
+
+	userRole string
+
 	security     string
 	resourcePath string
 	certPath     string
+
 	proxyState   string
 	proxyVersion string
 	image        string
-	enabled      bool
-	development  bool
+
+	enabled     bool
+	development bool
 )
 
 type configAPI struct {

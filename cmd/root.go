@@ -33,7 +33,7 @@ var rootCmd = &cobra.Command{
 	Use:     "apimctl",
 	Short:   "apimctl manages API Manager resources",
 	Long:    `apimctl controls and manages API Manager resources.`,
-	Version: "2.0.0",
+	Version: "2.1.0",
 	// Run: func(cmd *cobra.Command, args []string) {
 	// },
 }

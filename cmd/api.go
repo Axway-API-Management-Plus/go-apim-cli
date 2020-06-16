@@ -19,6 +19,7 @@ package cmd
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -113,6 +114,13 @@ func createBackendAPI(cmd *cobra.Command, args []string) {
 	if err != nil {
 		utils.PrettyPrintErr("Error Opening file: %v", err)
 	}
+
+	apiID, err := getAPIByName(args)
+	if err == nil {
+		utils.PrettyPrintErr("Can't create Backend API: %v already exists with ID %b", apiName, apiID)
+		os.Exit(0)
+	}
+
 	beAPI, _, err := client.APIRepositoryApi.ApirepoImportPost(context.Background(), orgID, apiName, "swagger", file)
 	if err != nil {
 		utils.PrettyPrintErr("Error Creating Backend API: %v", err)
@@ -149,10 +157,8 @@ func listBackendAPI(cmd *cobra.Command, args []string) {
 	}
 }
 
-func getAPIByName(args []string) string {
+func getAPIByName(args []string) (string, error) {
 	cfg := getConfig()
-
-	// utils.PrettyPrintInfo("Finding API %v ....", apiName)
 
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)
@@ -166,26 +172,30 @@ func getAPIByName(args []string) string {
 	apis, _, err := client.APIRepositoryApi.ApirepoGet(context.Background(), apiGetOpts)
 	if err != nil {
 		utils.PrettyPrintErr("Error finding backend API: %v", err)
-		os.Exit(0)
+		return "", err
 	}
 	if len(apis) != 0 {
 		// utils.PrettyPrintInfo("Backend API found: %v", apis[0].Name)
-		return apis[0].Id
+		return apis[0].Id, nil
 	}
-	utils.PrettyPrintInfo("Backend API %v not found ", apiName)
-	os.Exit(0)
-	return apis[0].Id
+	// utils.PrettyPrintInfo("Backend API %v not found ", apiName)
+	return "", errors.New("Backend API  not found")
+
 }
 
 func deleteAPI(cmd *cobra.Command, args []string) {
 	cfg := getConfig()
 
-	apiID := getAPIByName(args)
+	apiID, err := getAPIByName(args)
+	if err != nil {
+		utils.PrettyPrintInfo("Backend API %v not found ", apiName)
+		os.Exit(0)
+	}
 
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)
 
-	_, err := client.APIRepositoryApi.ApirepoIdDelete(context.Background(), apiID)
+	_, err = client.APIRepositoryApi.ApirepoIdDelete(context.Background(), apiID)
 	if err != nil {
 		utils.PrettyPrintErr("Unable to delete the backend API: %v", err)
 		return
@@ -196,7 +206,11 @@ func deleteAPI(cmd *cobra.Command, args []string) {
 
 func describeAPI(cmd *cobra.Command, args []string) {
 	cfg := getConfig()
-	apiID := getAPIByName(args)
+	apiID, err := getAPIByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("Backend API %v not found ", apiName)
+		os.Exit(0)
+	}
 
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)

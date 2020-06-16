@@ -131,7 +131,11 @@ func createProxy(cmd *cobra.Command, args []string) {
 		proxyBody.CaCerts = certs
 	}
 
-	apiID := getAPIByName(args)
+	apiID, err := getAPIByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("Backend API %v not found ", apiName)
+		os.Exit(0)
+	}
 
 	orgID := getOrganizationByName(args)
 
@@ -169,7 +173,11 @@ func createProxy(cmd *cobra.Command, args []string) {
 	}
 	utils.PrettyPrintInfo("Proxy %v created", proxy.Name)
 	if appName != "" {
-		appID := getApplicationByName(args)
+		appID, err := getApplicationByName(args)
+		if err != nil {
+			utils.PrettyPrintErr("application %v not found ", appName)
+			return
+		}
 		reqApplicationAPIAccess(appID, proxy.Id, cfg)
 	}
 	return

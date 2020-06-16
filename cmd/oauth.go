@@ -105,7 +105,11 @@ func createOAuth(cmd *cobra.Command, args []string) {
 	if err != nil {
 		utils.PrettyPrintErr("Error reading a file %v", err)
 	}
-	appID := getApplicationByName(args)
+	appID, err := getApplicationByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("application %v not found ", appName)
+		return
+	}
 	// oauthBody.Id = "oauth_" + app.Name + "_0"
 	oauthBody.ApplicationId = appID
 	// oauthBody.Secret = "secret_" + app.Name + "_0"
@@ -126,7 +130,11 @@ func listOAuthKeys(cmd *cobra.Command, args []string) {
 	client = apimgr.NewAPIClient(cfg)
 	stdout := fmtDisplay()
 
-	appID := getApplicationByName(args)
+	appID, err := getApplicationByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("application %v not found ", appName)
+		return
+	}
 
 	oauths, _, err := client.ApplicationsApi.ApplicationsIdOauthGet(context.Background(), appID)
 	if err != nil {
@@ -148,12 +156,16 @@ func listOAuthKeys(cmd *cobra.Command, args []string) {
 
 func deleteOAuthKey(cmd *cobra.Command, args []string) {
 	cfg := getConfig()
-	appID := getApplicationByName(args)
+	appID, err := getApplicationByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("application %v not found ", appName)
+		return
+	}
 
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)
 
-	_, err := client.ApplicationsApi.ApplicationsIdOauthOauthIdDelete(context.Background(), appID, keyID)
+	_, err = client.ApplicationsApi.ApplicationsIdOauthOauthIdDelete(context.Background(), appID, keyID)
 	if err != nil {
 		utils.PrettyPrintErr("Unable to delete the apikey: %v", err)
 		return

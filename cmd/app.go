@@ -19,6 +19,7 @@ package cmd
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -159,6 +160,12 @@ func createApplication(cmd *cobra.Command, args []string) {
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)
 
+	appID, err := getApplicationByName(args)
+	if err == nil {
+		utils.PrettyPrintErr("Application %v already exists with Id %v", appName, appID)
+		return
+	}
+
 	appVars := &apimgr.ApplicationsPostOpts{}
 	appVars.Body = optional.NewInterface(app)
 
@@ -173,14 +180,17 @@ func createApplication(cmd *cobra.Command, args []string) {
 
 func deleteApplication(cmd *cobra.Command, args []string) {
 	cfg := getConfig()
-	appID := getApplicationByName(args)
-
+	appID, err := getApplicationByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("application %v not found ", appName)
+		return
+	}
 	// utils.PrettyPrintInfo("Deleting application %v ....", appName)
 
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)
 
-	_, err := client.ApplicationsApi.ApplicationsIdDelete(context.Background(), appID)
+	_, err = client.ApplicationsApi.ApplicationsIdDelete(context.Background(), appID)
 	if err != nil {
 		utils.PrettyPrintErr("Unable to delete the application: %v", err)
 		return
@@ -254,7 +264,7 @@ func editApplication(cmd *cobra.Command, args []string) {
 
 }
 
-func getApplicationByName(args []string) string {
+func getApplicationByName(args []string) (string, error) {
 	cfg := getConfig()
 
 	// utils.PrettyPrintInfo("Finding application %v ....", appName)
@@ -271,15 +281,15 @@ func getApplicationByName(args []string) string {
 	apps, _, err := client.ApplicationsApi.ApplicationsGet(context.Background(), getAppVars)
 	if err != nil {
 		utils.PrettyPrintErr("Error finding the application: %v", err)
-		os.Exit(0)
+		return "", err
 	}
 	if len(apps) != 0 {
 		// utils.PrettyPrintInfo("application found: %v", apps[0].Name)
-		return apps[0].Id
+		return apps[0].Id, nil
 	}
-	utils.PrettyPrintInfo("application %v not found ", appName)
-	os.Exit(0)
-	return apps[0].Id
+	// utils.PrettyPrintInfo("application %v not found ", appName)
+	// os.Exit(0)
+	return "", errors.New("Application not found")
 }
 
 func listApplications(cmd *cobra.Command, args []string) {
@@ -334,7 +344,11 @@ func reqApplicationAPIAccess(appID, apiID string, cfg *apimgr.Configuration) {
 
 func descApplication(cmd *cobra.Command, args []string) (apimgr.Application, error) {
 	cfg := getConfig()
-	appID := getApplicationByName(args)
+	appID, err := getApplicationByName(args)
+	if err != nil {
+		utils.PrettyPrintErr("application %v not found ", appName)
+		os.Exit(0)
+	}
 
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)

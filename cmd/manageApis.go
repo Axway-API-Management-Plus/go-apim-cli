@@ -17,12 +17,16 @@ limitations under the License.
 package cmd
 
 import (
+	"context"
+	"crypto/tls"
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 
 	"github.com/c-bata/go-prompt"
+	"github.com/skckadiyala/apimanager/apimgr"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -38,6 +42,15 @@ var (
 	Username 
 	Password
 `,
+		PreRun: func(cmd *cobra.Command, args []string) {
+			if name != "" {
+				// cmd.MarkFlagRequired("name")
+				cmd.MarkFlagRequired("port")
+				cmd.MarkFlagRequired("user")
+				cmd.MarkFlagRequired("password")
+			}
+		},
+
 		Run: login,
 	}
 
@@ -139,6 +152,11 @@ func init() {
 	rootCmd.AddCommand(describeCmd)
 	rootCmd.AddCommand(editCmd)
 
+	loginCmd.Flags().StringVarP(&name, "hostname", "n", "", "The name to store API Manager Hostname")
+	loginCmd.Flags().StringVarP(&keyID, "port", "r", "", "The name to store API Manager Port")
+	loginCmd.Flags().StringVarP(&userName, "user", "u", "", "The name to store API Manager Username")
+	loginCmd.Flags().StringVarP(&password, "password", "p", "", "The name to store API Manager password")
+
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
@@ -162,22 +180,26 @@ func completer(d prompt.Document) []prompt.Suggest {
 
 func login(cmd *cobra.Command, args []string) {
 
-	fmt.Print("\nAPI Manager Hostname")
-	host := prompt.Input(": ", completer)
-	fmt.Print("API Manager Port")
-	port := prompt.Input(": ", completer)
-	fmt.Print("Username")
-	username := prompt.Input(": ", completer)
-	fmt.Print("Password")
-	password := prompt.Input(": ", completer)
+	if name == "" {
+		fmt.Print("\nAPI Manager Hostname")
+		name = prompt.Input(": ", completer)
+		fmt.Print("API Manager Port")
+		keyID = prompt.Input(": ", completer)
+		fmt.Print("Username")
+		userName = prompt.Input(": ", completer)
+		fmt.Print("Password")
+		password = prompt.Input(": ", completer)
+	}
 
 	conf := configAPI{}
 
-	data := []byte(username + ":" + password)
+	data := []byte(userName + ":" + password)
 	basicAuth := base64.StdEncoding.EncodeToString(data)
 
-	conf.APIManagerHost = host
-	conf.APIManagerPort = port
+	getSysInfo(basicAuth, name, keyID)
+
+	conf.APIManagerHost = name
+	conf.APIManagerPort = keyID
 	conf.Authorization = basicAuth
 
 	out, err := yaml.Marshal(conf)
@@ -189,6 +211,26 @@ func login(cmd *cobra.Command, args []string) {
 	err = ioutil.WriteFile(home+"/.apimanager.yaml", out, 0644)
 	if err != nil {
 		fmt.Println("Error to write config yaml file", err)
-
 	}
+}
+
+func getSysInfo(basicAuth, apiHost, apiPort string) {
+	transCfg := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // ignore expired SSL certificates
+	}
+	cfg := apimgr.NewConfiguration()
+	cfg.Host = apiHost + ":" + apiPort
+	cfg.Scheme = "https"
+	cfg.AddDefaultHeader("Authorization", "Basic "+basicAuth)
+	cfg.HTTPClient = &http.Client{Transport: transCfg}
+
+	client := &apimgr.APIClient{}
+	client = apimgr.NewAPIClient(cfg)
+
+	_, _, err := client.APIManagerServicesApi.SysconfigGet(context.Background())
+	if err != nil {
+		fmt.Println("Error logging in to APIManager: ", err)
+		os.Exit(0)
+	}
+	fmt.Println("Login Succeeded")
 }
