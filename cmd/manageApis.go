@@ -152,20 +152,10 @@ func init() {
 	rootCmd.AddCommand(describeCmd)
 	rootCmd.AddCommand(editCmd)
 
-	loginCmd.Flags().StringVarP(&name, "hostname", "n", "", "The name to store API Manager Hostname")
-	loginCmd.Flags().StringVarP(&keyID, "port", "r", "", "The name to store API Manager Port")
+	loginCmd.Flags().StringVarP(&name, "hostname", "H", "", "The name to store API Manager Hostname")
+	loginCmd.Flags().StringVarP(&keyID, "port", "P", "", "The name to store API Manager Port")
 	loginCmd.Flags().StringVarP(&userName, "user", "u", "", "The name to store API Manager Username")
 	loginCmd.Flags().StringVarP(&password, "password", "p", "", "The name to store API Manager password")
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 func completer(d prompt.Document) []prompt.Suggest {

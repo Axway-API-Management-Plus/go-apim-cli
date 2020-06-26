@@ -172,14 +172,6 @@ func createProxy(cmd *cobra.Command, args []string) {
 		return
 	}
 	utils.PrettyPrintInfo("Proxy %v created", proxy.Name)
-	if appName != "" {
-		appID, err := getApplicationByName(args)
-		if err != nil {
-			utils.PrettyPrintErr("application %v not found ", appName)
-			return
-		}
-		reqApplicationAPIAccess(appID, proxy.Id, cfg)
-	}
 	return
 }
 
@@ -223,10 +215,8 @@ func getProxyByName(args []string, cfg *apimgr.Configuration) (apimgr.Virtualize
 		return proxy, err
 	}
 	if len(proxies) != 0 {
-		// utils.PrettyPrintInfo("Proxy found: %v", proxies[0].Name)
 		return proxies[0], nil
 	}
-	// utils.PrettyPrintInfo("Proxy %v not found ", name)
 	return proxy, errors.New("Proxy not found")
 }
 
@@ -289,10 +279,6 @@ func describeProxy(cmd *cobra.Command, args []string) {
 		utils.PrettyPrintErr("unable to find the proxy : %v", err)
 		return
 	}
-	// if proxy.State == "published" {
-	// 	fmt.Printf("Unable to Delete, Proxy %v is in published state \n", proxy.Name)
-	// 	return
-	// }
 
 	client := &apimgr.APIClient{}
 	client = apimgr.NewAPIClient(cfg)

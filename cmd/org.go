@@ -194,7 +194,7 @@ func deleteOrganization(cmd *cobra.Command, args []string) {
 
 	_, err := client.OrganizationsApi.OrganizationsIdDelete(context.Background(), orgID)
 	if err != nil {
-		utils.PrettyPrintErr("Unable to delete the Organization: %v", err)
+		utils.PrettyPrintErr("%v", err)
 		return
 	}
 	utils.PrettyPrintInfo("Organization %v deleted", orgName)

@@ -102,7 +102,6 @@ func init() {
 }
 
 func createBackendAPI(cmd *cobra.Command, args []string) {
-	// utils.PrettyPrintInfo("Creating backend API")
 
 	cfg := getConfig()
 	orgID := getOrganizationByName(args)
@@ -175,10 +174,8 @@ func getAPIByName(args []string) (string, error) {
 		return "", err
 	}
 	if len(apis) != 0 {
-		// utils.PrettyPrintInfo("Backend API found: %v", apis[0].Name)
 		return apis[0].Id, nil
 	}
-	// utils.PrettyPrintInfo("Backend API %v not found ", apiName)
 	return "", errors.New("Backend API  not found")
 
 }
