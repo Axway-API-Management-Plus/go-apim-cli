@@ -25,8 +25,9 @@ var (
 	userName  string
 	loginName string
 
-	keyID   string
-	oauthID string
+	accessID string
+	keyID    string
+	oauthID  string
 
 	name     string
 	password string

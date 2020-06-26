@@ -307,12 +307,10 @@ func listApplications(cmd *cobra.Command, args []string) {
 		return
 	}
 	if len(apps) != 0 {
-		// fmt.Printf("Name \t\t ID \n")
 		fmt.Fprintf(stdout, "ID\tNAME\tDESCRIPTION\tORGANIZATION\n")
 		for _, app := range apps {
-			// fmt.Printf("%v \t %v \n", app.Name, app.Id)
 			org, _, _ := client.OrganizationsApi.OrganizationsIdGet(context.Background(), app.OrganizationId)
-			fmt.Fprintf(stdout, "%v\t%v\t%vv\t%v\n", app.Id, app.Name, app.Description, org.Name)
+			fmt.Fprintf(stdout, "%v\t%v\t%v\t%v\n", app.Id, app.Name, app.Description, org.Name)
 		}
 		fmt.Fprint(stdout)
 		stdout.Flush()
@@ -320,26 +318,6 @@ func listApplications(cmd *cobra.Command, args []string) {
 		utils.PrettyPrintInfo("No application found ")
 		return
 	}
-}
-
-func reqApplicationAPIAccess(appID, apiID string, cfg *apimgr.Configuration) {
-
-	client := &apimgr.APIClient{}
-	client = apimgr.NewAPIClient(cfg)
-
-	reqBody := apimgr.ApiAccess{}
-	reqBody.ApiId = apiID
-	reqBody.Enabled = true
-
-	optVars := &apimgr.ApplicationsIdApisPostOpts{}
-	optVars.Body = optional.NewInterface(reqBody)
-
-	apiAccess, _, err := client.ApplicationsApi.ApplicationsIdApisPost(context.Background(), appID, optVars)
-	if err != nil {
-		utils.PrettyPrintErr("Error creating access to apis %v", err)
-	}
-
-	utils.PrettyPrintInfo(apiAccess.ApiId)
 }
 
 func descApplication(cmd *cobra.Command, args []string) (apimgr.Application, error) {

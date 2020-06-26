@@ -172,14 +172,14 @@ func createProxy(cmd *cobra.Command, args []string) {
 		return
 	}
 	utils.PrettyPrintInfo("Proxy %v created", proxy.Name)
-	if appName != "" {
-		appID, err := getApplicationByName(args)
-		if err != nil {
-			utils.PrettyPrintErr("application %v not found ", appName)
-			return
-		}
-		reqApplicationAPIAccess(appID, proxy.Id, cfg)
-	}
+	// if appName != "" {
+	// 	appID, err := getApplicationByName(args)
+	// 	if err != nil {
+	// 		utils.PrettyPrintErr("application %v not found ", appName)
+	// 		return
+	// 	}
+	// 	reqApplicationAPIAccess(appID, proxy.Id)
+	// }
 	return
 }
 

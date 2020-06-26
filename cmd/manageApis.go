@@ -152,8 +152,8 @@ func init() {
 	rootCmd.AddCommand(describeCmd)
 	rootCmd.AddCommand(editCmd)
 
-	loginCmd.Flags().StringVarP(&name, "hostname", "n", "", "The name to store API Manager Hostname")
-	loginCmd.Flags().StringVarP(&keyID, "port", "r", "", "The name to store API Manager Port")
+	loginCmd.Flags().StringVarP(&name, "hostname", "H", "", "The name to store API Manager Hostname")
+	loginCmd.Flags().StringVarP(&keyID, "port", "P", "", "The name to store API Manager Port")
 	loginCmd.Flags().StringVarP(&userName, "user", "u", "", "The name to store API Manager Username")
 	loginCmd.Flags().StringVarP(&password, "password", "p", "", "The name to store API Manager password")
 
