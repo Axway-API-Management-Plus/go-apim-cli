@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/skckadiyala/apimanager/apimgr"
+	"github.com/Axway-API-Management-Plus/go-apim-cli/apimgr"
 	"github.com/skckadiyala/kubecrt-vms/utils"
 	"github.com/spf13/cobra"
 )

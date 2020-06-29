@@ -25,8 +25,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/Axway-API-Management-Plus/go-apim-cli/apimgr"
 	"github.com/c-bata/go-prompt"
-	"github.com/skckadiyala/apimanager/apimgr"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )

@@ -11,7 +11,7 @@ import (
 	"text/tabwriter"
 
 	"git.ecd.axway.int/apigov/kubecrt-vms/utils"
-	"github.com/skckadiyala/apimanager/apimgr"
+	"github.com/Axway-API-Management-Plus/go-apim-cli/apimgr"
 	"github.com/spf13/viper"
 )
 

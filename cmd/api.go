@@ -24,8 +24,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/Axway-API-Management-Plus/go-apim-cli/apimgr"
 	"github.com/antihax/optional"
-	"github.com/skckadiyala/apimanager/apimgr"
 	"github.com/skckadiyala/kubecrt-vms/utils"
 	"github.com/spf13/cobra"
 )

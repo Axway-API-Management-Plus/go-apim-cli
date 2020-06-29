@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/skckadiyala/apimanager/apimgr"
+	"github.com/Axway-API-Management-Plus/go-apim-cli/apimgr"
 	"github.com/spf13/viper"
 )
 
