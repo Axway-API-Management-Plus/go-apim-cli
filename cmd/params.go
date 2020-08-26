@@ -28,6 +28,7 @@ var (
 	accessID string
 	keyID    string
 	oauthID  string
+	secret   string
 
 	name     string
 	password string

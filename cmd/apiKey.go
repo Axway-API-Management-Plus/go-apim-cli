@@ -81,6 +81,8 @@ func init() {
 
 	keyCmd.Flags().StringVarP(&appName, "appName", "a", "", "The name to store application name")
 	keyCmd.MarkFlagRequired("appName")
+	keyCmd.Flags().StringVarP(&keyID, "apikey", "k", "", "The name to store unique apiKey")
+	keyCmd.Flags().StringVarP(&secret, "secret", "s", "", "The name to store unique Secret")
 
 	keyListCmd.Flags().StringVarP(&appName, "appName", "a", "", "The name to store application name")
 	keyListCmd.MarkFlagRequired("appName")
@@ -103,6 +105,13 @@ func createAPIKey(cmd *cobra.Command, args []string) {
 	apikey := apimgr.ApiKey{}
 
 	apikey.ApplicationId = appID
+
+	if keyID != "" {
+		apikey.Id = keyID
+	}
+	if secret != "" {
+		apikey.Secret = secret
+	}
 
 	apikeyPost := &apimgr.ApplicationsIdApikeysPostOpts{}
 	apikeyPost.ApiKey = optional.NewInterface(apikey)
