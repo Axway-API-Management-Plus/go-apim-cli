@@ -62,8 +62,8 @@ apimctl login
 * apimctl create key -a X-Men
 * apimctl create oauth -a X-Men -c resources/cert.pem 
 * apimctl create api -n 'X-Men' -o 'Marvel' -f resources/swagger.json 
-* apimctl create proxy -n 'First Class' -b 'Iron Man' -c resources/cert.pem -o Marvel 
-* apimctl create proxy -n 'Days of the Future Past' -b 'Iron Man' -c resources/cert.pem -o Marvel -s apikey -a Avengers
+* apimctl create proxy -n 'First Class' -b 'X-Men' -c resources/cert.pem -o Marvel 
+* apimctl create proxy -n 'Days of the Future Past' -b 'X-Men' -c resources/cert.pem -o Marvel -s apikey -a Avengers
 * apimctl create proxy -n 'Apocalypse' -c resources/cert.pem -o Marvel -s oauth -a Avengers
 * apimctl create access -a X-Men -n 'Days of the Future Past'
 * apimctl create access -a X-Men -n 'Apocalypse'

@@ -108,12 +108,15 @@ func init() {
 
 	proxyCmd.Flags().StringVarP(&appName, "appName", "a", "", "application name")
 	proxyCmd.Flags().StringVarP(&security, "security", "s", "passthrough", "provide the security to use for proxy: \napikey \nhttpbasic \noauth \npassthrough")
+	proxyCmd.Flags().StringVarP(&outbound, "outbound", "d", "", "provide the outbound auth security to use for proxy: \nhttpbasic")
+	proxyCmd.Flags().StringVarP(&userName, "username", "bu", "", "only for outbound httpbasic provide username")
+	proxyCmd.Flags().StringVarP(&password, "password", "bp", "", "only for outbound httpbasic provide password")
+
 	proxyCmd.Flags().StringVarP(&resourcePath, "resourcePath", "r", "", "provide the resource path for the proxy")
 	proxyCmd.Flags().StringVarP(&certPath, "certPath", "c", "", "provide the location of the backend api cert")
 
 	proxyCmd.Flags().StringVarP(&proxyVersion, "proxyVersion", "v", "1.0", "provide the proxy version")
 	proxyCmd.Flags().StringVarP(&proxyState, "proxyState", "p", "published", "provide the proxy state")
-
 }
 
 func createProxy(cmd *cobra.Command, args []string) {
@@ -155,8 +158,17 @@ func createProxy(cmd *cobra.Command, args []string) {
 	case "oauth":
 		proxyBody.SecurityProfiles = getSecurityProfileOAuth()
 	default:
-		fmt.Fprintln(os.Stderr, "Invalid security data - allowed security name: passthrough,apikey,oauth, httpbasic")
+		fmt.Fprintln(os.Stderr, "Invalid security data - allowed security name: passthrough, apikey, oauth, httpbasic")
 		return
+	}
+	if outbound == "httpbasic" {
+		if userName != "" && password != "" {
+			proxyBody.AuthenticationProfiles = getAuthProfileHTTPBasic(userName, password)
+		} else {
+			fmt.Fprintln(os.Stderr, "Invalid input data - please proviode httpbasic username/password")
+			return
+		}
+
 	}
 
 	proxyBody.Path = resourcePath //"/bank/v1"

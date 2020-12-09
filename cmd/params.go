@@ -35,6 +35,7 @@ var (
 
 	userRole string
 
+	outbound     string
 	security     string
 	resourcePath string
 	certPath     string

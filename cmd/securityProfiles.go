@@ -112,3 +112,18 @@ func getSecurityProfileOAuth() []apimgr.SecurityProfile {
 
 	return securityProfile
 }
+
+func getAuthProfileHTTPBasic(user, password string) []apimgr.AuthenticationProfile {
+	authProfile := make([]apimgr.AuthenticationProfile, 1)
+	params := map[string]interface{}{
+		"username": user,
+		"password": password,
+	}
+
+	authProfile[0].Name = "_default"
+	authProfile[0].IsDefault = true
+	authProfile[0].Parameters = params
+	authProfile[0].Type = "http_basic"
+
+	return authProfile
+}
