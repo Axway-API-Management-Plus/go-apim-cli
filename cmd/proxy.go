@@ -109,8 +109,8 @@ func init() {
 	proxyCmd.Flags().StringVarP(&appName, "appName", "a", "", "application name")
 	proxyCmd.Flags().StringVarP(&security, "security", "s", "passthrough", "provide the security to use for proxy: \napikey \nhttpbasic \noauth \npassthrough")
 	proxyCmd.Flags().StringVarP(&outbound, "outbound", "d", "", "provide the outbound auth security to use for proxy: \nhttpbasic")
-	proxyCmd.Flags().StringVarP(&userName, "username", "bu", "", "only for outbound httpbasic provide username")
-	proxyCmd.Flags().StringVarP(&password, "password", "bp", "", "only for outbound httpbasic provide password")
+	proxyCmd.Flags().StringVarP(&userName, "username", "U", "", "only for outbound httpbasic provide username")
+	proxyCmd.Flags().StringVarP(&password, "password", "P", "", "only for outbound httpbasic provide password")
 
 	proxyCmd.Flags().StringVarP(&resourcePath, "resourcePath", "r", "", "provide the resource path for the proxy")
 	proxyCmd.Flags().StringVarP(&certPath, "certPath", "c", "", "provide the location of the backend api cert")
