@@ -62,15 +62,33 @@ var (
 For example:
 
   # Create an organization using the data in org.json
-  apimanager create org -f ./org.json
+  apimctl create org -f ./org.json
 
   # Create an application  using the data in org.json
-  apimanager create app -f ./app.json
+  apimctl create app -f ./app.json
 	`,
 		// Run: func(cmd *cobra.Command, args []string) {
 		// 	fmt.Println("create called")
 		// },
 	}
+
+	updateCmd = &cobra.Command{
+		Use:   "update",
+		Short: "Update an API Manager resource",
+		Long: `Update an API Manager resource. 
+
+For example:
+
+  # Create an organization using the data in org.json
+
+  # Create an application  using the data in org.json
+  apimctl update app -f ./app.json
+	`,
+		// Run: func(cmd *cobra.Command, args []string) {
+		// 	fmt.Println("create called")
+		// },
+	}
+
 	listCmd = &cobra.Command{
 		Use:     "list",
 		Aliases: []string{"get"},
@@ -80,10 +98,10 @@ For example:
 	For example:
 	
 	  # list all organizations
-	  apimanager list org 
+	  apimctl list org 
 	
 	  # Create all applications  
-	  apimanager get app 
+	  apimctl get app 
 		`,
 		// Run: func(cmd *cobra.Command, args []string) {
 		// 	fmt.Println("list called")
@@ -97,10 +115,10 @@ For example:
 	For example:
 	
 	  # Delete an organization using the name
-	  apimanager delete org -n Avengers
+	  apimctl delete org -n Avengers
 	
 	  # Dlete an application  using the name
-	  apimanager delete app -n Asgard
+	  apimctl delete app -n Asgard
 		`,
 		// Run: func(cmd *cobra.Command, args []string) {
 		// 	fmt.Println("delete called")
@@ -115,10 +133,10 @@ For example:
 	For example:
 	
 	  # Delete an organization using the name
-	  apimanager describe org -n Avengers
+	  apimctl describe org -n Avengers
 	
 	  # Dlete an application  using the name
-	  apimanager describe app -n Asgard
+	  apimctl describe app -n Asgard
 		`,
 		// Run: func(cmd *cobra.Command, args []string) {
 		// 	fmt.Println("delete called")
@@ -147,6 +165,7 @@ For example:
 func init() {
 	rootCmd.AddCommand(loginCmd)
 	rootCmd.AddCommand(createCmd)
+	rootCmd.AddCommand(updateCmd)
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(deleteCmd)
 	rootCmd.AddCommand(describeCmd)

@@ -40,14 +40,31 @@ var (
 For example:
 
 # Create proxy using the data 
-apimanager create proxy -f proxy.json
-apimanager create proxy -n <name> -a 'Backend API' -o <orgName> -s passthrough`,
+apimctl create proxy -f proxy.json
+apimctl create proxy -n <name> -a 'Backend API' -o <orgName> -s passthrough`,
 		PreRun: func(cmd *cobra.Command, args []string) {
 			if security != "passthrough" {
 				cmd.MarkFlagRequired("appName")
 			}
 		},
 		Run: createProxy,
+	}
+	proxyUpdate = &cobra.Command{
+		Use:   "proxy",
+		Short: "Update Proxy",
+		Long: `Update Proxy from a file or with params. 
+
+For example:
+
+# Create proxy using the data 
+apimctl update proxy -f proxy.json
+apimctl update proxy -n <name> -a 'Backend API' -o <orgName> -s passthrough`,
+		PreRun: func(cmd *cobra.Command, args []string) {
+			if security != "passthrough" {
+				cmd.MarkFlagRequired("appName")
+			}
+		},
+		Run: updateProxy,
 	}
 	proxyList = &cobra.Command{
 		Use:   "proxies",
@@ -57,7 +74,7 @@ apimanager create proxy -n <name> -a 'Backend API' -o <orgName> -s passthrough`,
 For example:
 
 # list all proxy 
-apimanager list proxies `,
+apimctl list proxies `,
 		Run: listProxies,
 	}
 	proxyDelete = &cobra.Command{
@@ -87,6 +104,7 @@ apimanager describe proxy -n <ProxyName> `,
 
 func init() {
 	createCmd.AddCommand(proxyCmd)
+	updateCmd.AddCommand(proxyUpdate)
 	listCmd.AddCommand(proxyList)
 	deleteCmd.AddCommand(proxyDelete)
 	describeCmd.AddCommand(proxyDescribe)
@@ -117,6 +135,17 @@ func init() {
 
 	proxyCmd.Flags().StringVarP(&proxyVersion, "proxyVersion", "v", "1.0", "provide the proxy version")
 	proxyCmd.Flags().StringVarP(&proxyState, "proxyState", "p", "published", "provide the proxy state")
+
+	proxyUpdate.Flags().StringVarP(&name, "name", "n", "", "proxy name")
+	proxyUpdate.MarkFlagRequired("name")
+
+	proxyUpdate.Flags().StringVarP(&security, "security", "s", "passthrough", "provide the security to use for proxy: \napikey \nhttpbasic \noauth \npassthrough")
+	proxyUpdate.Flags().StringVarP(&outbound, "outbound", "d", "", "provide the outbound auth security to use for proxy: \nhttpbasic")
+	proxyUpdate.Flags().StringVarP(&userName, "username", "U", "", "only for outbound httpbasic provide username")
+	proxyUpdate.Flags().StringVarP(&password, "password", "P", "", "only for outbound httpbasic provide password")
+
+	proxyUpdate.Flags().StringVarP(&resourcePath, "resourcePath", "r", "", "provide the resource path for the proxy")
+	proxyUpdate.Flags().StringVarP(&proxyVersion, "proxyVersion", "v", "1.0", "provide the proxy version")
 }
 
 func createProxy(cmd *cobra.Command, args []string) {
@@ -280,6 +309,58 @@ func deleteProxy(cmd *cobra.Command, args []string) {
 		return
 	}
 	utils.PrettyPrintInfo("Proxy %v Deleted", name)
+	return
+}
+
+func updateProxy(cmd *cobra.Command, args []string) {
+	cfg := getConfig()
+	proxyBody := apimgr.VirtualizedApi{}
+	client := &apimgr.APIClient{}
+	client = apimgr.NewAPIClient(cfg)
+
+	pro, err := getProxyByName(args, cfg)
+	if err != nil {
+		utils.PrettyPrintInfo("Proxy with name %v doen't exists", pro.Name)
+		return
+	}
+	if pro.State == "published" {
+		fmt.Printf("Unable to Delete, Proxy %v is in published state \n", pro.Name)
+		return
+	}
+
+	proxyBody = pro
+
+	switch security {
+	case "passthrough":
+		proxyBody.SecurityProfiles = getSecurityProfilePassThrough()
+	case "apikey":
+		proxyBody.SecurityProfiles = getSecurityProfileAPIKey()
+	case "httpbasic":
+		proxyBody.SecurityProfiles = getSecurityProfileHTTPBasic()
+	case "oauth":
+		proxyBody.SecurityProfiles = getSecurityProfileOAuth()
+	default:
+		fmt.Fprintln(os.Stderr, "Invalid security data - allowed security name: passthrough, apikey, oauth, httpbasic")
+		return
+	}
+	if outbound == "httpbasic" {
+		if userName != "" && password != "" {
+			proxyBody.AuthenticationProfiles = getAuthProfileHTTPBasic(userName, password)
+		} else {
+			fmt.Fprintln(os.Stderr, "Invalid input data - please proviode httpbasic username/password")
+			return
+		}
+	}
+
+	proxyBody.Path = resourcePath //"/bank/v1"
+	proxyBody.Version = proxyVersion
+
+	proxy, _, err := client.APIProxyRegistrationApi.ProxiesIdPut(context.Background(), pro.Id, proxyBody)
+	if err != nil {
+		utils.PrettyPrintErr("Error updating proxy :%v", err)
+		return
+	}
+	utils.PrettyPrintInfo("Proxy %v created", proxy.Name)
 	return
 }
 
