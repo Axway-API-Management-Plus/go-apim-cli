@@ -20,7 +20,7 @@ Usage:
   apimctl [command]
 
 Available Commands:
-  create      Create an API Manager resource
+  create      Create an API Manager resource from a file
   delete      delete an API Manager resource
   describe    describe an API Manager resource
   edit        edit an API Manager resource
@@ -29,9 +29,10 @@ Available Commands:
   login       Stores the login info of API Manager
   publish     publish a proxy
   unpublish   unpublish a proxy
+  update      Update an API Manager resource
 
 Flags:
-      --config string   config file (default is $HOME/.apimctl.yaml)
+      --config string   config file to store connection details (default ".apimanager")
   -h, --help            help for apimctl
   -v, --version         version for apimctl
 

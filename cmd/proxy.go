@@ -324,7 +324,7 @@ func updateProxy(cmd *cobra.Command, args []string) {
 		return
 	}
 	if pro.State == "published" {
-		fmt.Printf("Unable to Delete, Proxy %v is in published state \n", pro.Name)
+		fmt.Printf("Unable to update, Proxy %v is in published state \n", pro.Name)
 		return
 	}
 
@@ -360,7 +360,7 @@ func updateProxy(cmd *cobra.Command, args []string) {
 		utils.PrettyPrintErr("Error updating proxy :%v", err)
 		return
 	}
-	utils.PrettyPrintInfo("Proxy %v created", proxy.Name)
+	utils.PrettyPrintInfo("Proxy %v updated", proxy.Name)
 	return
 }
 
