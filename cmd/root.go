@@ -54,7 +54,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.apimanager.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", ".apimanager", "config file (default is $HOME/.apimanager.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -63,21 +63,14 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := homedir.Dir()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-
-		// Search config in home directory with name ".apimanager" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".apimanager")
+	// Use config file from the flag.
+	home, err := homedir.Dir()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
+	viper.AddConfigPath(home)
+	viper.SetConfigName(cfgFile)
 
 	viper.AutomaticEnv() // read in environment variables that match
 
@@ -86,4 +79,5 @@ func initConfig() {
 		// fmt.Println("Using config file:", viper.ConfigFileUsed())
 		// fmt.Println("Keys", viper.AllKeys())
 	}
+
 }

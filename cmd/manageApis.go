@@ -27,6 +27,7 @@ import (
 
 	"github.com/Axway-API-Management-Plus/go-apim-cli/apimgr"
 	"github.com/c-bata/go-prompt"
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -216,8 +217,14 @@ func login(cmd *cobra.Command, args []string) {
 		fmt.Println("Error to marshal config yaml", err)
 		return
 	}
-	home := os.Getenv("HOME")
-	err = ioutil.WriteFile(home+"/.apimanager.yaml", out, 0644)
+
+	home, err := homedir.Dir()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	// home := os.Getenv("HOME")
+	err = ioutil.WriteFile(home+"/"+cfgFile+".yaml", out, 0644)
 	if err != nil {
 		fmt.Println("Error to write config yaml file", err)
 	}
