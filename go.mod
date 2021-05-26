@@ -1,0 +1,41 @@
+module github.com/Axway-API-Management-Plus/go-apim-cli
+
+go 1.16
+
+require (
+	github.com/antihax/optional v1.0.0
+	github.com/c-bata/go-prompt v0.2.3
+	github.com/fsnotify/fsnotify v1.4.9
+	github.com/golang/protobuf v1.4.2
+	github.com/hashicorp/hcl v1.0.0
+	github.com/inconshreveable/mousetrap v1.0.0
+	github.com/kr/fs v0.1.0
+	github.com/magiconair/properties v1.8.1
+	github.com/mattn/go-colorable v0.0.9
+	github.com/mattn/go-isatty v0.0.12
+	github.com/mattn/go-runewidth v0.0.9
+	github.com/mattn/go-tty v0.0.4-0.20200128103838-acb06aaba0f8
+	github.com/mitchellh/go-homedir v1.1.0
+	github.com/mitchellh/mapstructure v1.3.2
+	github.com/pelletier/go-toml v1.8.0
+	github.com/pkg/errors v0.9.1
+	github.com/pkg/sftp v1.11.0
+	github.com/pkg/term v0.0.0-20200520122047-c3ffed290a03
+	github.com/skckadiyala/kubecrt-vms v0.0.0-20200505232729-06ffe8d18344
+	github.com/spf13/afero v1.3.1
+	github.com/spf13/cast v1.3.1
+	github.com/spf13/cobra v1.0.0
+	github.com/spf13/jwalterweatherman v1.1.0
+	github.com/spf13/pflag v1.0.5
+	github.com/spf13/viper v1.7.0
+	github.com/subosito/gotenv v1.2.0
+	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+	golang.org/x/net v0.0.0-20200625001655-4c5254603344
+	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
+	golang.org/x/sys v0.0.0-20200625212154-ddb9806d33ae
+	golang.org/x/text v0.3.3
+	google.golang.org/appengine v1.6.6
+	google.golang.org/protobuf v1.25.0
+	gopkg.in/ini.v1 v1.57.0
+	gopkg.in/yaml.v2 v2.3.0
+)
